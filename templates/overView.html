@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My home office</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>I'm extending the base template</h2>
+
     {% for setup in setups %}
         {{ setup.user_name }}<br>
         {{ setup.upload_date }}<br>
@@ -16,5 +12,5 @@
         {{ setup.item_two }}<br>
         {{ setup.item_three }}<br>
     {% endfor %}
-</body>
-</html>
+
+    {% endblock %}
