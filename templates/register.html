@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card text-dark bg-light mb-3 container-sm">
+    <div class="card-body">
+        <h3 class="card-title text-center">Register here!</h3>
+        <form method="POST" action="{{ url_for('register') }}">
+            <!-- Username -->
+            <div class="mb-3">
+                <i class="fas fa-user"></i>
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp">
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+                <i class="fas fa-envelope"></i>
+                <label for="email1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email1" name="email" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <!-- Password -->
+            <div class="mb-3">
+                <i class="fas fa-lock"></i>
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" class="validate">
+                <div id="passwordHelp" class="form-text">Password needs to be between 5-20 characters.</div>
+            </div>
+            <!-- Submit button -->
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Register <i class="fas fa-check"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
