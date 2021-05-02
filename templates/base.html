@@ -8,9 +8,12 @@
     <meta name="author" content="" />
     <title>My home office</title>
     <!-- Favicon-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.io/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.io/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon.io/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ url_for('static', filename='favicon.io/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="{{ url_for('static', filename='favicon.io/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="{{ url_for('static', filename='favicon.io/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='favicon.io/site.webmanifest') }}">
     <!-- Font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -46,10 +49,26 @@
             </div>
         </div>
     </nav>
+
+    <section>
+        <!-- flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="row flashes">
+                    <h4 class="center-align">{{ message }}</h4>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
+
     <!-- Page Content-->
 
-    {% block content %}
-    {% endblock %}
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
 
     <!-- Footer-->
     <footer class="py-5 bg-dark">
