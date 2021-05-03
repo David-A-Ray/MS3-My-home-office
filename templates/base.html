@@ -29,7 +29,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#!">My home office</a>
+            <a class="navbar-brand" href="{{ url_for('show_setups') }}">My home office</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
                     class="navbar-toggler-icon"></span></button>
@@ -37,7 +37,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('show_setups') }}">Home</a></li>
                     {% if session.user %}
-                    <li class="nav-item"><a class="nav-link" href="">My Work Space</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('myWorkSpace', username=session['user']) }}">My Work Space</a></li>
                     {% if session.user|lower == "admin"|lower %}
                     <li class="nav-item"><a class="nav-link" href="">Manage Entries</a></li>
                     {% endif %}
