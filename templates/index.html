@@ -9,11 +9,11 @@
         <p class="lead">Over the course of the last year a lot of us have found ourselves working from home, this site
             has been setup so we can all share images of our own ideal home office setups so load yours up now. Let's
             see the good, the bad, the ugly and probably the funny ones as well! Enjoy.</p>
-        <a class="btn btn-primary btn-lg" href="#!">Register here</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}">Register here</a>
     </header>
 
     <!-- Page Features-->
-
+    {{ url_for('register') }}
     {% for setup in setups %}
     {{ setup.user_name }}<br>
     {{ setup.upload_date }}<br>
