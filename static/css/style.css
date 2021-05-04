@@ -24,3 +24,8 @@ footer {
   background-color: lightblue;
   width: 100%;
 }
+
+.user-image {
+  height: 35%;
+  width: 100%;
+}

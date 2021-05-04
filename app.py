@@ -46,7 +46,7 @@ def register():
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("You have registered")
-        return redirect(url_for("myWorkSpace", username=session["user"]))
+        return redirect(url_for("my_work_space", username=session["user"]))
     return render_template("register.html")
 
 
@@ -64,7 +64,7 @@ def login():
                     session["user"] = request.form.get("username").lower()
                     flash("Welcome, {}".format(request.form.get("username")))
                     return redirect(url_for(
-                        "myWorkSpace", username=session["user"]))
+                        "my_work_space", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -78,14 +78,14 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/myworkSpace/<username>", methods=["GET", "POST"])
+@app.route("/my_work_space/<username>", methods=["GET", "POST"])
 def myWorkSpace(username):
     # grab the session user's name from the database
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
 
     if session["user"]:
-        return render_template("myWorkSpace.html", username=username)
+        return render_template("my_work_space.html", username=username)
     
     return redirect(url_for("login"))
 
@@ -96,6 +96,11 @@ def logout():
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
+
+
+@app.route("/add_my_work_space")
+def add_my_work_space():
+    return render_template("add_my_work_space.html")
 
 
 if __name__ == "__main__":

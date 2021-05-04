@@ -13,64 +13,23 @@
     </header>
 
     <!-- Page Features-->
-    {{ url_for('register') }}
-    {% for setup in setups %}
-    {{ setup.user_name }}<br>
-    {{ setup.upload_date }}<br>
-    {{ setup.image_url }}<br>
-    {{ setup.image_description }}<br>
-    {{ setup.item_one }}<br>
-    {{ setup.item_two }}<br>
-    {{ setup.item_three }}<br>
-    {% endfor %}
-
     <div class="row text-center">
+        {% for setup in setups %}
         <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://via.placeholder.com/500x325" alt="..." />
+            <div class="card h-200">
+                <img class="card-img-top user-image" src="{{ setup.image_url }}" alt="..." />
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
-                        necessitatibus neque.</p>
+                    <h4 class="card-title">User: {{ setup.user_name }}</h4>
+                    <h5>Uploaded: {{ setup.upload_date }}</h5>
+                    <p class="card-text">{{ setup.image_description }}</p>
                 </div>
-                <div class="card-footer"><a class="btn btn-primary" href="#!">Find Out More!</a></div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" href="#!">Like</a>
+                    <a class="btn btn-danger" href="#!">Find Out More!</a>
+                </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://via.placeholder.com/500x325" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni
-                        sapiente,
-                        tempore debitis beatae culpa natus architecto.</p>
-                </div>
-                <div class="card-footer"><a class="btn btn-primary" href="#!">Find Out More!</a></div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://via.placeholder.com/500x325" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
-                        necessitatibus neque.</p>
-                </div>
-                <div class="card-footer"><a class="btn btn-primary" href="#!">Find Out More!</a></div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://via.placeholder.com/500x325" alt="..." />
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni
-                        sapiente,
-                        tempore debitis beatae culpa natus architecto.</p>
-                </div>
-                <div class="card-footer"><a class="btn btn-primary" href="#!">Find Out More!</a></div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 
