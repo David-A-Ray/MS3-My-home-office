@@ -41,7 +41,7 @@
                     {% if session.user|lower == "admin"|lower %}
                     <li class="nav-item"><a class="nav-link" href="">Manage Entries</a></li>
                     {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="">Log Out</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
