@@ -4,7 +4,7 @@
 <div class="card text-dark bg-light mb-3 container-sm">
     <div class="card-body">
         <h3 class="card-title text-center">My work space</h3>
-        <form method="POST" action="">
+        <form method="POST" action="{{ url_for('add_my_work_space') }}">
             <!-- Image -->
             <div class="mb-3">
                 <label for="image" class="form-label">Select image to upload</label>
@@ -18,7 +18,7 @@
             </div>
             <!-- Product 1 -->
             <!-- Dropdown -->
-            <label for="category1" class="form-label">Item 1 (optional)</label>
+            <label for="item1" class="form-label">Item 1 (optional)</label>
             <input class="form-control" list="datalistOptions" id="category1" name="category1"
                 placeholder="select">
             <datalist id="datalistOptions">
@@ -26,7 +26,7 @@
                 <option value="Desk">
                 <option value="Keyboard">
                 <option value="Monitor">
-                <option value="Mounts">
+                <option value="Mount">
                 <option value="Mouse">
                 <option value="Other hardware">
                 <option value="PC/Laptop">
@@ -36,41 +36,21 @@
             <!-- URL link -->
             <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url1" name="url1"><br>
 
-            <!-- Product 1 -->
+            <!-- Product 2 -->
             <!-- Dropdown -->
-            <label for="category1" class="form-label">Item 2 (optional)</label>
+            <label for="item2" class="form-label">Item 2 (optional)</label>
             <input class="form-control" list="datalistOptions" id="category2" name="category2"
                 placeholder="select">
-            <datalist id="datalistOptions">
-                <option value="Chair">
-                <option value="Desk">
-                <option value="Keyboard">
-                <option value="Monitor">
-                <option value="Mounts">
-                <option value="Mouse">
-                <option value="Other hardware">
-                <option value="PC/Laptop">
-            </datalist>
             <!-- Product -->
             <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product2" name="product2">
             <!-- URL link -->
             <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url2" name="url2"><br>
 
-            <!-- Product 1 -->
+            <!-- Product 3 -->
             <!-- Dropdown -->
-            <label for="category1" class="form-label">Item 3 (optional)</label>
+            <label for="item3" class="form-label">Item 3 (optional)</label>
             <input class="form-control" list="datalistOptions" id="category3" name="category3"
                 placeholder="select">
-            <datalist id="datalistOptions">
-                <option value="Chair">
-                <option value="Desk">
-                <option value="Keyboard">
-                <option value="Monitor">
-                <option value="Mounts">
-                <option value="Mouse">
-                <option value="Other hardware">
-                <option value="PC/Laptop">
-            </datalist>
             <!-- Product -->
             <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product3" name="product3">
             <!-- URL link -->

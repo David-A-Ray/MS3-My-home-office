@@ -5,6 +5,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
+from datetime import date
 if os.path.exists("env.py"):
     import env
 
@@ -16,7 +17,8 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
-
+today = date.today()
+d1 = today.strftime("%d/%m/%Y")
 
 @app.route("/")
 @app.route("/show_setups")
@@ -98,8 +100,28 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/add_my_work_space")
+@app.route("/add_my_work_space", methods=["GET", "POST"])
 def add_my_work_space():
+    if request.method == "POST":
+        setup = {
+            "image": request.form.get("image"),
+            "description": request.form.get("description"),
+            "category1": request.form.get("category1"),
+            "product1": request.form.get("product1"),
+            "url1": request.form.get("url1"),
+            "category2": request.form.get("category2"),
+            "product2": request.form.get("product2"),
+            "url2": request.form.get("url2"),
+            "category3": request.form.get("category3"),
+            "product3": request.form.get("product3"),
+            "url3": request.form.get("url3"),
+            "user_name": session["user"],
+            "upload_date": d1,
+        }
+        mongo.db.my_set_up.insert_one(setup)
+        flash("Your home office was uploaded")
+        return redirect(url_for("show_setups"))
+
     return render_template("add_my_work_space.html")
 
 
