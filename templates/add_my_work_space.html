@@ -8,17 +8,19 @@
             <!-- Image -->
             <div class="mb-3">
                 <label for="image" class="form-label">Select image to upload</label>
-                <input class="form-control" type="file" id="formFile">
+                <input class="form-control validate" type="file" id="image" name="image" required>
             </div>
             <!-- Description -->
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" minlength="20"
+                    maxlength="250" required></textarea>
             </div>
             <!-- Product 1 -->
             <!-- Dropdown -->
-            <label for="categoryRange" class="form-label">Item 1 (optional)</label>
-            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <label for="category1" class="form-label">Item 1 (optional)</label>
+            <input class="form-control" list="datalistOptions" id="category1" name="category1"
+                placeholder="select">
             <datalist id="datalistOptions">
                 <option value="Chair">
                 <option value="Desk">
@@ -29,17 +31,16 @@
                 <option value="Other hardware">
                 <option value="PC/Laptop">
             </datalist>
-
             <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
-
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product1" name="product1">
             <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url1" name="url1"><br>
 
-            <!-- Product 2 -->
+            <!-- Product 1 -->
             <!-- Dropdown -->
-            <label for="categoryRange" class="form-label">Item 2 (optional)</label>
-            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <label for="category1" class="form-label">Item 2 (optional)</label>
+            <input class="form-control" list="datalistOptions" id="category2" name="category2"
+                placeholder="select">
             <datalist id="datalistOptions">
                 <option value="Chair">
                 <option value="Desk">
@@ -50,16 +51,16 @@
                 <option value="Other hardware">
                 <option value="PC/Laptop">
             </datalist>
-
             <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product2" name="product2">
             <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url2" name="url2"><br>
 
-            <!-- Product 3 -->
+            <!-- Product 1 -->
             <!-- Dropdown -->
-            <label for="categoryRange" class="form-label">Item 3 (optional)</label>
-            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <label for="category1" class="form-label">Item 3 (optional)</label>
+            <input class="form-control" list="datalistOptions" id="category3" name="category3"
+                placeholder="select">
             <datalist id="datalistOptions">
                 <option value="Chair">
                 <option value="Desk">
@@ -70,51 +71,10 @@
                 <option value="Other hardware">
                 <option value="PC/Laptop">
             </datalist>
-
             <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product3" name="product3">
             <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
-
-            <!-- Product 4 -->
-            <!-- Dropdown -->
-            <label for="categoryRange" class="form-label">Item 4 (optional)</label>
-            <input class="form-control" list="datalistOptions" placeholder="Select">
-            <datalist id="datalistOptions">
-                <option value="Chair">
-                <option value="Desk">
-                <option value="Keyboard">
-                <option value="Monitor">
-                <option value="Mounts">
-                <option value="Mouse">
-                <option value="Other hardware">
-                <option value="PC/Laptop">
-            </datalist>
-
-            <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
-            <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
-
-            <!-- Product 5 -->
-            <!-- Dropdown -->
-            <label for="categoryRange" class="form-label">Item 5 (optional)</label>
-            <input class="form-control" list="datalistOptions" placeholder="Select">
-            <datalist id="datalistOptions">
-                <option value="Chair">
-                <option value="Desk">
-                <option value="Keyboard">
-                <option value="Monitor">
-                <option value="Mounts">
-                <option value="Mouse">
-                <option value="Other hardware">
-                <option value="PC/Laptop">
-            </datalist>
-
-            <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
-            <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url3" name="url3"><br>
 
             <div class="row justify-content-end">
                 <!-- Submit button -->
