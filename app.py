@@ -79,7 +79,7 @@ def login():
 
 
 @app.route("/my_work_space/<username>", methods=["GET", "POST"])
-def myWorkSpace(username):
+def my_work_space(username):
     # grab the session user's name from the database
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]

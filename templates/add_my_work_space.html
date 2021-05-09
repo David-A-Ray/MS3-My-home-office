@@ -3,9 +3,131 @@
 
 <div class="card text-dark bg-light mb-3 container-sm">
     <div class="card-body">
-        <h3 class="card-title text-center">
-            Load your work space
-        </h3>
+        <h3 class="card-title text-center">My work space</h3>
+        <form method="POST" action="">
+            <!-- Image -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Select image to upload</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <!-- Product 1 -->
+            <!-- Dropdown -->
+            <label for="categoryRange" class="form-label">Item 1 (optional)</label>
+            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <datalist id="datalistOptions">
+                <option value="Chair">
+                <option value="Desk">
+                <option value="Keyboard">
+                <option value="Monitor">
+                <option value="Mounts">
+                <option value="Mouse">
+                <option value="Other hardware">
+                <option value="PC/Laptop">
+            </datalist>
+
+            <!-- Product -->
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+
+            <!-- URL link -->
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+
+            <!-- Product 2 -->
+            <!-- Dropdown -->
+            <label for="categoryRange" class="form-label">Item 2 (optional)</label>
+            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <datalist id="datalistOptions">
+                <option value="Chair">
+                <option value="Desk">
+                <option value="Keyboard">
+                <option value="Monitor">
+                <option value="Mounts">
+                <option value="Mouse">
+                <option value="Other hardware">
+                <option value="PC/Laptop">
+            </datalist>
+
+            <!-- Product -->
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+            <!-- URL link -->
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+
+            <!-- Product 3 -->
+            <!-- Dropdown -->
+            <label for="categoryRange" class="form-label">Item 3 (optional)</label>
+            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <datalist id="datalistOptions">
+                <option value="Chair">
+                <option value="Desk">
+                <option value="Keyboard">
+                <option value="Monitor">
+                <option value="Mounts">
+                <option value="Mouse">
+                <option value="Other hardware">
+                <option value="PC/Laptop">
+            </datalist>
+
+            <!-- Product -->
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+            <!-- URL link -->
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+
+            <!-- Product 4 -->
+            <!-- Dropdown -->
+            <label for="categoryRange" class="form-label">Item 4 (optional)</label>
+            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <datalist id="datalistOptions">
+                <option value="Chair">
+                <option value="Desk">
+                <option value="Keyboard">
+                <option value="Monitor">
+                <option value="Mounts">
+                <option value="Mouse">
+                <option value="Other hardware">
+                <option value="PC/Laptop">
+            </datalist>
+
+            <!-- Product -->
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+            <!-- URL link -->
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+
+            <!-- Product 5 -->
+            <!-- Dropdown -->
+            <label for="categoryRange" class="form-label">Item 5 (optional)</label>
+            <input class="form-control" list="datalistOptions" placeholder="Select">
+            <datalist id="datalistOptions">
+                <option value="Chair">
+                <option value="Desk">
+                <option value="Keyboard">
+                <option value="Monitor">
+                <option value="Mounts">
+                <option value="Mouse">
+                <option value="Other hardware">
+                <option value="PC/Laptop">
+            </datalist>
+
+            <!-- Product -->
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name">
+            <!-- URL link -->
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link"><br>
+
+            <div class="row justify-content-end">
+                <!-- Submit button -->
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit">Register <i class="fas fa-check"></i></button>
+                </div>
+                <!-- Register -->
+                <div class="mb-3">
+                    <a href="{{ url_for('login') }}" class="btn btn-danger">Already registered? <i
+                            class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
