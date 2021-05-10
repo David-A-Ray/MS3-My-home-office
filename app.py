@@ -7,7 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
 from datetime import date
-from .forms import SignupForm
 if os.path.exists("env.py"):
     import env
 
@@ -41,7 +40,7 @@ def show_setups():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        # check if username already exsists in db
+        # check if username already exists in db
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
