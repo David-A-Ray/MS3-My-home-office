@@ -4,10 +4,10 @@
 <div class="card text-dark bg-light mb-3 container-sm">
     <div class="card-body">
         <h3 class="card-title text-center">My work space</h3>
-        <form method="POST" action="{{ url_for('add_my_work_space') }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_my_work_space') }}">
             <!-- Image -->
             <div class="mb-3">
-                <label for="image" class="form-label">Select image to upload</label>
+                <label for="file" class="form-label">Select image to upload</label>
                 <input class="form-control validate" type="file" id="image" name="image" required>
             </div>
             <!-- Description -->

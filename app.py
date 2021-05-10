@@ -4,21 +4,32 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
 from datetime import date
+from .forms import SignupForm
 if os.path.exists("env.py"):
     import env
 
 
-app = Flask(__name__)
+today = date.today()
+d1 = today.strftime("%d/%m/%Y")
+UPLOAD_FOLDER = '/assets/images/'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
+app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
-today = date.today()
-d1 = today.strftime("%d/%m/%Y")
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit(
+        '.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route("/")
 @app.route("/show_setups")
@@ -63,10 +74,10 @@ def login():
             # ensure hashed password matches user input
             if check_password_hash(
                 existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
-                    return redirect(url_for(
-                        "my_work_space", username=session["user"]))
+                session["user"] = request.form.get("username").lower()
+                flash("Welcome, {}".format(request.form.get("username")))
+                return redirect(url_for(
+                    "my_work_space", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -102,7 +113,7 @@ def logout():
 
 @app.route("/add_my_work_space", methods=["GET", "POST"])
 def add_my_work_space():
-    if request.method == "POST":
+    if request.method == 'POST':
         setup = {
             "image": request.form.get("image"),
             "description": request.form.get("description"),
