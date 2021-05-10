@@ -7,12 +7,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
 from datetime import date
+from forms import SignupForm, WorkspaceForm
 if os.path.exists("env.py"):
     import env
+from typing import Optional
 
 
-today = date.today()
-d1 = today.strftime("%d/%m/%Y")
 UPLOAD_FOLDER = '/assets/images/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -24,41 +24,42 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-
+# ----------------- HELPER FUNCTIONS -----------------
 def allowed_file(filename):
     return '.' in filename and filename.rsplit(
         '.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def is_logged_in() -> Optional[str]:
+    """
+    Returns the username if found in session, else None
+    """
+    return session.get("user")
 
-@app.route("/")
-@app.route("/show_setups")
-def show_setups():
-    setups = mongo.db.my_set_up.find()
-    return render_template("index.html", setups=setups)
 
-
+# ----------------- AUTH -----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        # check if username already exists in db
+    form = SignupForm()
+    if form.validate_on_submit():
+        # check if username already exsists in db
         existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+            {"username": form.username.data.lower()})
 
         if existing_user:
             flash("Username already taken")
             return redirect(url_for("register"))
 
         register = {
-            "username": request.form.get("username").lower(),
-            "email": request.form.get("email"),
-            "password": generate_password_hash(request.form.get("password"))
+            "username": form.username.data.lower(),
+            "email": form.email.data,
+            "password": generate_password_hash(form.password.data)
         }
         mongo.db.users.insert_one(register)
 
         # put the new user into 'session' cookie
-        session["user"] = request.form.get("username").lower()
+        session["user"] = form.username.data
         flash("You have registered")
-        return redirect(url_for("my_work_space", username=session["user"]))
+        return redirect(url_for("my_workspace", username=session["user"]))
     return render_template("register.html")
 
 
@@ -76,7 +77,7 @@ def login():
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
                 return redirect(url_for(
-                    "my_work_space", username=session["user"]))
+                    "my_workspace", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -90,18 +91,6 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/my_work_space/<username>", methods=["GET", "POST"])
-def my_work_space(username):
-    # grab the session user's name from the database
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-
-    if session["user"]:
-        return render_template("my_work_space.html", username=username)
-    
-    return redirect(url_for("login"))
-
-
 @app.route("/logout")
 def logout():
     # remove user from session cookies
@@ -110,29 +99,27 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/add_my_work_space", methods=["GET", "POST"])
-def add_my_work_space():
-    if request.method == 'POST':
-        setup = {
-            "image": request.form.get("image"),
-            "description": request.form.get("description"),
-            "category1": request.form.get("category1"),
-            "product1": request.form.get("product1"),
-            "url1": request.form.get("url1"),
-            "category2": request.form.get("category2"),
-            "product2": request.form.get("product2"),
-            "url2": request.form.get("url2"),
-            "category3": request.form.get("category3"),
-            "product3": request.form.get("product3"),
-            "url3": request.form.get("url3"),
-            "user_name": session["user"],
-            "upload_date": d1,
-        }
-        mongo.db.my_set_up.insert_one(setup)
-        flash("Your home office was uploaded")
-        return redirect(url_for("show_setups"))
+# ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
+@app.route("/")
+@app.route("/home")
+def show_setups():
+    setups = mongo.db.my_set_up.find()
+    return render_template("index.html", setups=setups)
 
-    return render_template("add_my_work_space.html")
+
+@app.route("/my_workspace/<username>", methods=["GET", "POST"])
+def my_workspace(username):
+    if is_logged_in():
+        # grab the user from the DB based on username
+        user = mongo.db.users.find_one({"username": session["user"]})
+        return render_template("my_workspace.html", user=user)
+    return redirect(url_for("login"))
+
+
+
+
+
+# ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
 
 
 if __name__ == "__main__":

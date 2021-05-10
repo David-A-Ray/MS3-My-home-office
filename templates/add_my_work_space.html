@@ -4,7 +4,7 @@
 <div class="card text-dark bg-light mb-3 container-sm">
     <div class="card-body">
         <h3 class="card-title text-center">My work space</h3>
-        <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_my_work_space') }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_workspace') }}">
             <!-- Image -->
             <div class="mb-3">
                 <label for="file" class="form-label">Select image to upload</label>
@@ -35,26 +35,6 @@
             <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product1" name="product1">
             <!-- URL link -->
             <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url1" name="url1"><br>
-
-            <!-- Product 2 -->
-            <!-- Dropdown -->
-            <label for="item2" class="form-label">Item 2 (optional)</label>
-            <input class="form-control" list="datalistOptions" id="category2" name="category2"
-                placeholder="select">
-            <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product2" name="product2">
-            <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url2" name="url2"><br>
-
-            <!-- Product 3 -->
-            <!-- Dropdown -->
-            <label for="item3" class="form-label">Item 3 (optional)</label>
-            <input class="form-control" list="datalistOptions" id="category3" name="category3"
-                placeholder="select">
-            <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product3" name="product3">
-            <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url3" name="url3"><br>
 
             <div class="row justify-content-end">
                 <!-- Submit button -->
