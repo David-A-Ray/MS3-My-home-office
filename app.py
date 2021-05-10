@@ -16,7 +16,7 @@ from typing import Optional
 UPLOAD_FOLDER = '/assets/images/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=False)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -60,7 +60,7 @@ def register():
         session["user"] = form.username.data
         flash("You have registered")
         return redirect(url_for("my_workspace", username=session["user"]))
-    return render_template("register.html")
+    return render_template("register.html", form=form, template="form_template")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -102,9 +102,9 @@ def logout():
 # ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
 @app.route("/")
 @app.route("/home")
-def show_setups():
+def home():
     setups = mongo.db.my_set_up.find()
-    return render_template("index.html", setups=setups)
+    return render_template("home.html", setups=setups)
 
 
 @app.route("/my_workspace/<username>", methods=["GET", "POST"])
@@ -116,11 +116,31 @@ def my_workspace(username):
     return redirect(url_for("login"))
 
 
-
-
-
 # ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
-
+@app.route("/add_workspace", methods=["GET", "POST"])
+def add_workspace():
+    form = WorkspaceForm()
+    if form.validate_on_submit():  # check if POST and validate
+        filename = secure_filename(form.file.data.filename)
+        path_to_image = form.file.data.save(UPLOAD_FOLDER + filename)
+        workspace_data = {
+            "image": path_to_image, # <img src="{{ workspace.image }}"
+            "description": form.description.data,
+            "category_1": request.form.get("category1"),
+            "product_1": request.form.get("product1"),
+            "url_1": request.form.get("url1"),
+            "category_2": request.form.get("category2"),
+            "product_2": request.form.get("product2"),
+            "url_2": request.form.get("url2"),
+            "category_3": request.form.get("category3"),
+            "product_3": request.form.get("product3"),
+            "url_3": request.form.get("url3"),
+            "user_name": session["user"],
+            "upload_date": date.today().strftime("%d/%m/%Y"),
+        }
+        mongo.db.my_set_up.insert_one(workspace_data)
+        flash("Your home office was uploaded")
+        return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
