@@ -12,7 +12,7 @@ if os.path.exists("env.py"):
 from typing import Optional
 
 
-UPLOAD_FOLDER = '/assets/images/'
+UPLOAD_FOLDER = '/workspace/MS3-My-home-office/assets/images/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__, instance_relative_config=False)
@@ -23,10 +23,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+
 # ----------------- HELPER FUNCTIONS -----------------
 def allowed_file(filename):
     return '.' in filename and filename.rsplit(
         '.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def is_logged_in() -> Optional[str]:
     """
@@ -114,30 +116,33 @@ def my_workspace(username):
     return redirect(url_for("login"))
 
 
-# ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
+# ----------------- UPLOAD USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
     if request.method == 'POST':
-        filename = secure_filename(form.file.data.filename)
-        path_to_image = form.file.data.save(UPLOAD_FOLDER + filename)
-        setup = {
-            "image": path_to_image,  # <img src="{{ workspace.image }}"
-            "description": request.form.get("description"),
-            "category1": request.form.get("category1"),
-            "product1": request.form.get("product1"),
-            "url1": request.form.get("url1"),
-            "category2": request.form.get("category2"),
-            "product2": request.form.get("product2"),
-            "url2": request.form.get("url2"),
-            "category3": request.form.get("category3"),
-            "product3": request.form.get("product3"),
-            "url3": request.form.get("url3"),
-            "user_name": session["user"],
-            "upload_date": date.today().strftime("%d/%m/%Y"),
-        }
-        mongo.db.my_set_up.insert_one(setup)
-        flash("Your home office was uploaded")
-        return redirect(url_for("home"))
+        image = request.files['image']
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            path_to_image = (os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            setup = {
+                "image": path_to_image,  # <img src="{{ setup.image }}"
+                "description": request.form.get("description"),
+                "category_1": request.form.get("category_1"),
+                "product_1": request.form.get("product_1"),
+                "url_1": request.form.get("url_1"),
+                "category_2": request.form.get("category_2"),
+                "product_2": request.form.get("product_2"),
+                "url_2": request.form.get("url_2"),
+                "category_3": request.form.get("category_3"),
+                "product_3": request.form.get("product_3"),
+                "url_3": request.form.get("url_3"),
+                "user_name": session["user"],
+                "upload_date": date.today().strftime("%d/%m/%Y"),
+            }
+            mongo.db.my_set_up.insert_one(setup)
+            flash("Your home office was uploaded")
+            return redirect(url_for("home"))
 
     return render_template("add_workspace.html")
 
