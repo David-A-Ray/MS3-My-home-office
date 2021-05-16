@@ -13,7 +13,7 @@ from typing import Optional
 
 
 UPLOAD_FOLDER = '/workspace/MS3-My-home-office/assets/images/'
-IMAGE_PATH = 'assets/images/'
+IMAGE_PATH = '../assets/images/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__, instance_relative_config=False)
