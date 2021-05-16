@@ -7,7 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
 from datetime import date
-from forms import SignupForm, WorkspaceForm
 if os.path.exists("env.py"):
     import env
 from typing import Optional
@@ -39,28 +38,27 @@ def is_logged_in() -> Optional[str]:
 # ----------------- AUTH -----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    form = SignupForm()
-    if form.validate_on_submit():
-        # check if username already exsists in db
+    if request.method == "POST":
+        # check if username already exists in db
         existing_user = mongo.db.users.find_one(
-            {"username": form.username.data.lower()})
+            {"username": request.form.get("username").lower()})
 
         if existing_user:
             flash("Username already taken")
             return redirect(url_for("register"))
 
         register = {
-            "username": form.username.data.lower(),
-            "email": form.email.data,
-            "password": generate_password_hash(form.password.data)
+            "username": request.form.get("username").lower(),
+            "email": request.form.get("email"),
+            "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register)
 
         # put the new user into 'session' cookie
-        session["user"] = form.username.data
+        session["user"] = request.form.get("username").lower()
         flash("You have registered")
         return redirect(url_for("my_workspace", username=session["user"]))
-    return render_template("register.html", form=form, template="form_template")
+    return render_template("register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -119,28 +117,29 @@ def my_workspace(username):
 # ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
-    form = WorkspaceForm()
-    if form.validate_on_submit():  # check if POST and validate
+    if request.method == 'POST':
         filename = secure_filename(form.file.data.filename)
         path_to_image = form.file.data.save(UPLOAD_FOLDER + filename)
-        workspace_data = {
-            "image": path_to_image, # <img src="{{ workspace.image }}"
-            "description": form.description.data,
-            "category_1": request.form.get("category1"),
-            "product_1": request.form.get("product1"),
-            "url_1": request.form.get("url1"),
-            "category_2": request.form.get("category2"),
-            "product_2": request.form.get("product2"),
-            "url_2": request.form.get("url2"),
-            "category_3": request.form.get("category3"),
-            "product_3": request.form.get("product3"),
-            "url_3": request.form.get("url3"),
+        setup = {
+            "image": path_to_image,  # <img src="{{ workspace.image }}"
+            "description": request.form.get("description"),
+            "category1": request.form.get("category1"),
+            "product1": request.form.get("product1"),
+            "url1": request.form.get("url1"),
+            "category2": request.form.get("category2"),
+            "product2": request.form.get("product2"),
+            "url2": request.form.get("url2"),
+            "category3": request.form.get("category3"),
+            "product3": request.form.get("product3"),
+            "url3": request.form.get("url3"),
             "user_name": session["user"],
             "upload_date": date.today().strftime("%d/%m/%Y"),
         }
-        mongo.db.my_set_up.insert_one(workspace_data)
+        mongo.db.my_set_up.insert_one(setup)
         flash("Your home office was uploaded")
         return redirect(url_for("home"))
+
+    return render_template("add_workspace.html")
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
