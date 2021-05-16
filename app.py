@@ -13,12 +13,14 @@ from typing import Optional
 
 
 UPLOAD_FOLDER = '/workspace/MS3-My-home-office/assets/images/'
+IMAGE_PATH = 'assets/images/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__, instance_relative_config=False)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['IMAGE_PATH'] = IMAGE_PATH
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
@@ -121,10 +123,10 @@ def my_workspace(username):
 def add_workspace():
     if request.method == 'POST':
         image = request.files['image']
-        if image and allowed_file(image.filename):
+        if allowed_file(image.filename):
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path_to_image = (os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            path_to_image = (os.path.join(app.config['IMAGE_PATH'], filename))
             setup = {
                 "image": path_to_image,  # <img src="{{ setup.image }}"
                 "description": request.form.get("description"),
@@ -143,6 +145,10 @@ def add_workspace():
             mongo.db.my_set_up.insert_one(setup)
             flash("Your home office was uploaded")
             return redirect(url_for("home"))
+        
+        else:
+            flash("That file type is not allowed")
+            return redirect(url_for("add_workspace"))
 
     return render_template("add_workspace.html")
 
