@@ -12,8 +12,8 @@ if os.path.exists("env.py"):
 from typing import Optional
 
 
-UPLOAD_FOLDER = '/workspace/MS3-My-home-office/assets/images/'
-IMAGE_PATH = '../assets/images/'
+UPLOAD_FOLDER = '/workspace/MS3-My-home-office/static/images/'
+IMAGE_PATH = '/images/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__, instance_relative_config=False)
@@ -103,6 +103,11 @@ def logout():
 
 # ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
 @app.route("/")
+@app.route("/welcome")
+def welcome():
+    return render_template("welcome.html")
+
+
 @app.route("/home")
 def home():
     setups = mongo.db.my_set_up.find()
