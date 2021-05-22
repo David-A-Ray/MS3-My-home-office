@@ -3,7 +3,7 @@
 
 <div class="card text-dark bg-light mb-3 container-sm">
     <div class="card-body">
-        <h3 class="card-title text-center">My work space</h3>
+        <h3 class="card-title text-center">Upload your workspace</h3>
         <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_workspace') }}">
             <!-- Image -->
             <div class="mb-3">
@@ -59,11 +59,11 @@
             <div class="row justify-content-end">
                 <!-- Submit button -->
                 <div class="mb-3">
-                    <button class="btn btn-primary" type="submit">Register <i class="fas fa-check"></i></button>
+                    <button class="btn btn-primary" type="submit">Submit <i class="fas fa-check"></i></button>
                 </div>
                 <!-- Register -->
                 <div class="mb-3">
-                    <a href="{{ url_for('login') }}" class="btn btn-danger">Already registered? <i
+                    <a href="{{ url_for('login') }}" class="btn btn-danger">Cancel <i
                             class="fas fa-user"></i></a>
                 </div>
             </div>

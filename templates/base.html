@@ -29,16 +29,20 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
+            {% if session.user %}
+            <a class="navbar-brand" href="{{ url_for('home') }}">My home office</a>
+            {% else %}
             <a class="navbar-brand" href="{{ url_for('welcome') }}">My home office</a>
+            {% endif %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
                     class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     {% if session.user %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Work spaces</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('my_workspace', username=session['user']) }}">My Work Space</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('add_workspace') }}">Upload work space</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Workspaces</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('my_workspace', username=session['user']) }}">My Workspace</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('add_workspace') }}">Upload workspace</a></li>
                     {% if session.user|lower == "admin"|lower %}
                     <li class="nav-item"><a class="nav-link" href="">Manage Entries</a></li>
                     {% endif %}

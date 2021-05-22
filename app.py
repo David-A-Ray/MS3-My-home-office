@@ -79,7 +79,7 @@ def login():
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
                 return redirect(url_for(
-                    "my_workspace", username=session["user"]))
+                    "home", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -119,43 +119,66 @@ def my_workspace(username):
     if is_logged_in():
         # grab the user from the DB based on username
         user = mongo.db.users.find_one({"username": session["user"]})
-        return render_template("my_workspace.html", user=user)
+        if mongo.db.my_set_up.find_one({"user_name": session["user"]}):
+            setup = mongo.db.my_set_up.find_one({"user_name": session["user"]})
+            products = mongo.db.products.find({"user_name": session["user"]}).sort("_id", 1)
+            return render_template("my_workspace.html", user=user, setup=setup, products=products)
+        return redirect(url_for("add_workspace"))
     return redirect(url_for("login"))
 
 
 # ----------------- UPLOAD USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
-    if request.method == 'POST':
-        image = request.files['image']
-        if allowed_file(image.filename):
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path_to_image = (os.path.join(app.config['IMAGE_PATH'], filename))
-            setup = {
-                "image": path_to_image,  # <img src="{{ setup.image }}"
-                "description": request.form.get("description"),
-                "category_1": request.form.get("category_1"),
-                "product_1": request.form.get("product_1"),
-                "url_1": request.form.get("url_1"),
-                "category_2": request.form.get("category_2"),
-                "product_2": request.form.get("product_2"),
-                "url_2": request.form.get("url_2"),
-                "category_3": request.form.get("category_3"),
-                "product_3": request.form.get("product_3"),
-                "url_3": request.form.get("url_3"),
-                "user_name": session["user"],
-                "upload_date": date.today().strftime("%d/%m/%Y"),
-            }
-            mongo.db.my_set_up.insert_one(setup)
-            flash("Your home office was uploaded")
-            return redirect(url_for("home"))
-        
-        else:
-            flash("That file type is not allowed")
-            return redirect(url_for("add_workspace"))
+    if mongo.db.my_set_up.find_one({"user_name": session["user"]}):
+        flash("You can only load one workspace, you could delete this one to replace it?")
+        return redirect(url_for("my_workspace", username=session["user"]))
 
-    return render_template("add_workspace.html")
+    else:
+        if request.method == 'POST':
+            image = request.files['image']
+            if allowed_file(image.filename):
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                path_to_image = (os.path.join(app.config['IMAGE_PATH'], filename))
+                setup = {
+                    "image": path_to_image,
+                    "description": request.form.get("description"),
+                    "user_name": session["user"],
+                    "upload_date": date.today().strftime("%d/%m/%Y"),
+                }
+                products = [
+                    {
+                        "category": request.form.get("category_1"),
+                        "product": request.form.get("product_1"),
+                        "url": request.form.get("url_1"),
+                        "user_name": session["user"]
+                    },
+                    {
+                        "category": request.form.get("category_2"),
+                        "product": request.form.get("product_2"),
+                        "url": request.form.get("url_2"),
+                        "user_name": session["user"]
+                    },
+                    {
+                        "category": request.form.get("category_3"),
+                        "product": request.form.get("product_3"),
+                        "url": request.form.get("url_3"),
+                        "user_name": session["user"]
+                    }
+                ]
+
+                mongo.db.my_set_up.insert_one(setup)
+                mongo.db.products.insert(products)
+                flash("Your home office was uploaded")
+                return redirect(url_for("home"))
+            
+            else:
+                flash("That file type is not allowed")
+                return redirect(url_for("add_workspace"))
+
+        return render_template("add_workspace.html")
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
