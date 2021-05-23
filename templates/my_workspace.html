@@ -19,7 +19,7 @@
         {% endfor %}
     </div>
     <div class="card-footer">
-        <a class="btn btn-primary" href="#!">Edit</a>
+        <a class="btn btn-primary" href="{{ url_for('edit_workspace', user=setup.user_name) }}">Edit</a>
         <a class="btn btn-danger" href="#!">Delete</a>
     </div>
 </div>

@@ -105,7 +105,8 @@ def logout():
 @app.route("/")
 @app.route("/welcome")
 def welcome():
-    return render_template("welcome.html")
+    setups = mongo.db.my_set_up.find()
+    return render_template("welcome.html", setups=setups)
 
 
 @app.route("/home")
@@ -178,6 +179,14 @@ def add_workspace():
                 return redirect(url_for("add_workspace"))
 
         return render_template("add_workspace.html")
+
+
+@app.route("/edit_workspace/<user>", methods=["GET", "POST"])
+def edit_workspace(user):
+    setup = mongo.db.my_set_up.find_one({"user_name": session["user"]})
+    products = mongo.db.products.find({"user_name": session["user"]}).sort("_id", 1)
+    return render_template("edit_workspace.html", setup=setup, products=products)
+
 
 
 if __name__ == "__main__":
