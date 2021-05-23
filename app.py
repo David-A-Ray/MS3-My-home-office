@@ -105,13 +105,13 @@ def logout():
 @app.route("/")
 @app.route("/welcome")
 def welcome():
-    setups = mongo.db.my_set_up.find()
+    setups = mongo.db.workspaces.find()
     return render_template("welcome.html", setups=setups)
 
 
 @app.route("/home")
 def home():
-    setups = mongo.db.my_set_up.find()
+    setups = mongo.db.workspaces.find()
     return render_template("home.html", setups=setups)
 
 
@@ -120,10 +120,9 @@ def my_workspace(username):
     if is_logged_in():
         # grab the user from the DB based on username
         user = mongo.db.users.find_one({"username": session["user"]})
-        if mongo.db.my_set_up.find_one({"user_name": session["user"]}):
-            setup = mongo.db.my_set_up.find_one({"user_name": session["user"]})
-            products = mongo.db.products.find({"user_name": session["user"]}).sort("_id", 1)
-            return render_template("my_workspace.html", user=user, setup=setup, products=products)
+        if mongo.db.workspaces.find_one({"user_name": session["user"]}):
+            setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
+            return render_template("my_workspace.html", user=user, setup=setup)
         return redirect(url_for("add_workspace"))
     return redirect(url_for("login"))
 
@@ -131,7 +130,7 @@ def my_workspace(username):
 # ----------------- UPLOAD USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
-    if mongo.db.my_set_up.find_one({"user_name": session["user"]}):
+    if mongo.db.workspaces.find_one({"user_name": session["user"]}):
         flash("You can only load one workspace, you could delete this one to replace it?")
         return redirect(url_for("my_workspace", username=session["user"]))
 
@@ -147,30 +146,18 @@ def add_workspace():
                     "description": request.form.get("description"),
                     "user_name": session["user"],
                     "upload_date": date.today().strftime("%d/%m/%Y"),
+                    "category_1": request.form.get("category_1"),
+                    "product_1": request.form.get("product_1"),
+                    "url_1": request.form.get("url_1"),
+                    "category_2": request.form.get("category_2"),
+                    "product_2": request.form.get("product_2"),
+                    "url_2": request.form.get("url_2"),
+                    "category_3": request.form.get("category_3"),
+                    "product_3": request.form.get("product_3"),
+                    "url_3": request.form.get("url_3"),
                 }
-                products = [
-                    {
-                        "category": request.form.get("category_1"),
-                        "product": request.form.get("product_1"),
-                        "url": request.form.get("url_1"),
-                        "user_name": session["user"]
-                    },
-                    {
-                        "category": request.form.get("category_2"),
-                        "product": request.form.get("product_2"),
-                        "url": request.form.get("url_2"),
-                        "user_name": session["user"]
-                    },
-                    {
-                        "category": request.form.get("category_3"),
-                        "product": request.form.get("product_3"),
-                        "url": request.form.get("url_3"),
-                        "user_name": session["user"]
-                    }
-                ]
 
-                mongo.db.my_set_up.insert_one(setup)
-                mongo.db.products.insert(products)
+                mongo.db.workspaces.insert_one(setup)
                 flash("Your home office was uploaded")
                 return redirect(url_for("home"))
             
@@ -181,12 +168,39 @@ def add_workspace():
         return render_template("add_workspace.html")
 
 
-@app.route("/edit_workspace/<user>", methods=["GET", "POST"])
-def edit_workspace(user):
-    setup = mongo.db.my_set_up.find_one({"user_name": session["user"]})
-    products = mongo.db.products.find({"user_name": session["user"]}).sort("_id", 1)
-    return render_template("edit_workspace.html", setup=setup, products=products)
+@app.route("/edit_workspace/<username>", methods=["GET", "POST"])
+def edit_workspace(username):
+    if request.method == 'POST':
+        update = {
+            "image": request.form.get("image"),
+            "description": request.form.get("description"),
+            "user_name": session["user"],
+            "upload_date": date.today().strftime("%d/%m/%Y"),
+            "category_1": request.form.get("category_1"),
+            "product_1": request.form.get("product_1"),
+            "url_1": request.form.get("url_1"),
+            "category_2": request.form.get("category_2"),
+            "product_2": request.form.get("product_2"),
+            "url_2": request.form.get("url_2"),
+            "category_3": request.form.get("category_3"),
+            "product_3": request.form.get("product_3"),
+            "url_3": request.form.get("url_3"),
+        }
 
+        mongo.workspaces.update({"user_name": session["user"]}, update)
+        flash("Your home office was updated")
+        return redirect(url_for("home"))
+
+    user = mongo.db.users.find_one({"username": session["user"]})
+    setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
+    return render_template("edit_workspace.html", user=user, setup=setup)
+
+
+@app.route("/delete_workspace/<username>")
+def delete_workspace(username):
+    mongo.db.workspaces.remove({"user_name": session["user"]})
+    flash("You have deleted your workspace")
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":

@@ -14,13 +14,13 @@
         <h5 class="card-title">User: {{ setup.user_name }}</h5>
         <p class="card-text">{{ setup.description }}</p>
         <p class="card-text"><small class="text-muted">Uploaded: {{ setup.upload_date }}</small></p>
-        {% for product in products %}
-        <p>{{ product.category }}: <a target="_blank" href="{{ product.url }}">{{ product.product }}</a></p>
-        {% endfor %}
+        <p>{{ setup.category_1 }}: <a target="_blank" href="{{ setup.url_1 }}">{{ setup.product_1 }}</a></p>
+        <p>{{ setup.category_2 }}: <a target="_blank" href="{{ setup.url_2 }}">{{ setup.product_2 }}</a></p>
+        <p>{{ setup.category_3 }}: <a target="_blank" href="{{ setup.url_3 }}">{{ setup.product_3 }}</a></p>
     </div>
     <div class="card-footer">
-        <a class="btn btn-primary" href="{{ url_for('edit_workspace', user=setup.user_name) }}">Edit</a>
-        <a class="btn btn-danger" href="#!">Delete</a>
+        <a class="btn btn-primary" href="{{ url_for('edit_workspace', username=setup.user_name) }}">Edit</a>
+        <a class="btn btn-danger" href="{{ url_for('delete_workspace', username=setup.user_name) }}">Delete</a>
     </div>
 </div>
 
