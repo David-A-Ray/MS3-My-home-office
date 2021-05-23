@@ -39,7 +39,7 @@ def is_logged_in() -> Optional[str]:
     return session.get("user")
 
 
-# ----------------- AUTH -----------------
+# ----------------- SIGNUP, LOG IN, LOG OUT FUNCTIONS -----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -61,7 +61,7 @@ def register():
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("You have registered")
-        return redirect(url_for("my_workspace", username=session["user"]))
+        return redirect(url_for("home", username=session["user"]))
     return render_template("register.html")
 
 
@@ -168,6 +168,7 @@ def add_workspace():
         return render_template("add_workspace.html")
 
 
+# ----------------- EDIT USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/edit_workspace/<username>", methods=["GET", "POST"])
 def edit_workspace(username):
     if request.method == 'POST':
@@ -187,7 +188,7 @@ def edit_workspace(username):
             "url_3": request.form.get("url_3"),
         }
 
-        mongo.workspaces.update({"user_name": session["user"]}, update)
+        mongo.db.workspaces.update({"user_name": session["user"]}, update)
         flash("Your home office was updated")
         return redirect(url_for("home"))
 
@@ -196,6 +197,7 @@ def edit_workspace(username):
     return render_template("edit_workspace.html", user=user, setup=setup)
 
 
+# ----------------- DELETE WORKSPACE FUNCTIONALITY -----------------
 @app.route("/delete_workspace/<username>")
 def delete_workspace(username):
     mongo.db.workspaces.remove({"user_name": session["user"]})
