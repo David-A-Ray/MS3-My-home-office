@@ -8,9 +8,9 @@
             action="{{ url_for('edit_workspace', username=setup.user_name) }}">
             <!-- Image -->
             <div class="mb-3">
-                <label for="image" class="form-label">Select image to upload</label>
+                <label for="image" class="form-label">Image: (if you want to change your image please delete workspace and load a new one)</label>
                 <input class="form-control" type="text" aria-label="image" id="image"
-                name="image" value="{{ setup.image }}">
+                name="image" value="{{ setup.image }}" readonly="readonly">
             </div>
             <!-- Description -->
             <div class="mb-3">
