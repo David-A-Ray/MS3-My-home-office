@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+
+    <!-- Jumbotron Header-->
+    <header class="jumbotron my-5 text-center">
+        <h2 class="display-3">Ooops.... something went wrong!</h2>
+        <p class="lead">Not sure what happened there, click the button below to go back or use the options above.</p>
+        <a class="btn btn-danger" onclick="history.back(-1)">Go Back<i class="fas fa-user"></i></a><br>
+    </header>
+</div>
+
+{% endblock %}

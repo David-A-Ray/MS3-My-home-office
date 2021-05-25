@@ -1,10 +1,11 @@
 import os
 from flask import (
-    Flask, flash, render_template,
-    redirect, request, session, url_for)
+    Flask, abort, flash, render_template,
+    redirect, jsonify, request, session, url_for)
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import HTTPException
 from bson.objectid import ObjectId
 from datetime import date
 if os.path.exists("env.py"):
@@ -203,6 +204,22 @@ def delete_workspace(username):
     mongo.db.workspaces.remove({"user_name": session["user"]})
     flash("You have deleted your workspace")
     return redirect(url_for("home"))
+
+
+# ----------------- ERROR HANDLING -----------------
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('error.html', title="404 Error"), 404
+
+
+@app.errorhandler(403)
+def error_403(error):
+    return render_template('error.html', title="403 Error"), 403
+
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template('error.html', title="500 Error"), 500
 
 
 if __name__ == "__main__":
