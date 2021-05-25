@@ -64,16 +64,11 @@
             <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_3" name="url_3"
                 value="{{ setup.url_3 }}"><br>
 
-            <div class="row justify-content-end">
+            <div class="col-md-12 text-center">
                 <!-- Submit button -->
-                <div class="mb-3">
-                    <button class="btn btn-primary" type="submit">Edit <i class="fas fa-check"></i></button>
-                </div>
+                <button class="btn btn-primary" type="submit"><i class="far fa-edit"></i> Edit</button>
                 <!-- Register -->
-                <div class="mb-3">
-                    <a href="{{ url_for('my_workspace', username=session['user']) }}" class="btn btn-danger">Cancel <i
-                            class="fas fa-user"></i></a>
-                </div>
+                <a href="{{ url_for('my_workspace', username=session['user']) }}" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</a>
             </div>
         </form>
     </div>

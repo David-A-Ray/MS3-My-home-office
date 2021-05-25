@@ -19,8 +19,7 @@
             <!-- Product 1 -->
             <!-- Dropdown -->
             <label for="item_1" class="form-label">Item 1 (optional)</label>
-            <input class="form-control" list="datalistOptions" id="category_1" name="category_1"
-                placeholder="select">
+            <input class="form-control" list="datalistOptions" id="category_1" name="category_1" placeholder="select">
             <datalist id="datalistOptions">
                 <option value="Chair">
                 <option value="Desk">
@@ -32,40 +31,38 @@
                 <option value="PC/Laptop">
             </datalist>
             <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_1" name="product_1">
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_1"
+                name="product_1">
             <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_1" name="url_1"><br>
-            
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_1"
+                name="url_1"><br>
+
             <!-- Product 2 -->
             <!-- Dropdown -->
             <label for="item_2" class="form-label">Item 2 (optional)</label>
-            <input class="form-control" list="datalistOptions" id="category_2" name="category_2"
-                placeholder="select">
+            <input class="form-control" list="datalistOptions" id="category_2" name="category_2" placeholder="select">
             <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_2" name="product_2">
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_2"
+                name="product_2">
             <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_2" name="url_2"><br>
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_2"
+                name="url_2"><br>
 
             <!-- Product 3 -->
             <!-- Dropdown -->
             <label for="item_3" class="form-label">Item 3 (optional)</label>
-            <input class="form-control" list="datalistOptions" id="category_3" name="category_3"
-                placeholder="select">
+            <input class="form-control" list="datalistOptions" id="category_3" name="category_3" placeholder="select">
             <!-- Product -->
-            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_3" name="product_3">
+            <input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_3"
+                name="product_3">
             <!-- URL link -->
-            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_3" name="url_3"><br>
+            <input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_3"
+                name="url_3"><br>
 
-            <div class="row justify-content-end">
-                <!-- Submit button -->
-                <div class="mb-3">
-                    <button class="btn btn-primary" type="submit">Submit <i class="fas fa-check"></i></button>
-                </div>
-                <!-- Register -->
-                <div class="mb-3">
-                    <a href="{{ url_for('home') }}" class="btn btn-danger">Cancel <i
-                            class="fas fa-user"></i></a>
-                </div>
+            <!-- buttons -->
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Submit</button>
+                <a href="{{ url_for('home') }}" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</a>
             </div>
         </form>
     </div>

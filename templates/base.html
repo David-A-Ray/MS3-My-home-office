@@ -42,7 +42,6 @@
                     {% if session.user %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Workspaces</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('my_workspace', username=session['user']) }}">My Workspace</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('add_workspace') }}">Upload workspace</a></li>
                     {% if session.user|lower == "admin"|lower %}
                     <li class="nav-item"><a class="nav-link" href="">Manage Entries</a></li>
                     {% endif %}
