@@ -4,10 +4,11 @@
 <div class="card text-dark bg-light mb-2 container-sm">
     <div class="card-body">
         <h3 class="card-title text-center">
-            {{ user.username }}'s Workspace
+            {{ setup.user_name }}'s Workspace
         </h3>
     </div>
 </div>
+
 <div class="card mb-3">
     <img src="{{ url_for('static', filename=setup.image) }}" alt="..." class="card-img">
     <div class="card-body">
@@ -19,8 +20,7 @@
         <p>{{ setup.category_3 }}: <a target="_blank" href="{{ setup.url_3 }}">{{ setup.product_3 }}</a></p>
     </div>
     <div class="card-footer text-center">
-        <a class="btn btn-primary" href="{{ url_for('edit_workspace', username=setup.user_name) }}"><i class="far fa-edit"></i> Edit</a>
-        <a class="btn btn-danger" href="{{ url_for('delete_workspace', username=setup.user_name) }}"><i class="far fa-trash-alt"></i> Delete</a>
+        <a class="btn btn-danger" onclick="history.back(-1)"><i class="fas fa-arrow-circle-left"></i> Go Back</a><br>
     </div>
 </div>
 

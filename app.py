@@ -128,6 +128,13 @@ def my_workspace(username):
     return redirect(url_for("login"))
 
 
+@app.route("/user_workspace/<setup_id>", methods=["GET"])
+def user_workspace(setup_id):
+    user = mongo.db.users.find_one({"username": ObjectId(setup_id)})
+    setup = mongo.db.workspaces.find_one({"_id": ObjectId(setup_id)})
+    return render_template("user_workspace.html", user=user, setup=setup)
+
+
 # ----------------- UPLOAD USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
