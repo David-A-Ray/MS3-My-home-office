@@ -17,13 +17,11 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" minlength="5" maxlength="20"  pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
             </div>
+            <div class="col-md-12 text-center">  
             <!-- login -->
-            <div class="mb-3">
-                <button class="btn btn-primary" type="submit"><i class="fas fa-key"></i>  Login</button>
-            </div>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-key"></i> Login</button>
             <!-- Register -->
-            <div class="mb-3">
-                <a href="{{ url_for('register') }}" class="btn btn-danger"><i class="fas fa-user"></i> Register New User</a>
+                <a href="{{ url_for('register') }}" class="btn btn-danger"><i class="fas fa-user-plus"></i> Register New User</a>
             </div>
         </form>
     </div>

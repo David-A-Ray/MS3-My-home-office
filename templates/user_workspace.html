@@ -20,7 +20,10 @@
         <p>{{ setup.category_3 }}: <a target="_blank" href="{{ setup.url_3 }}">{{ setup.product_3 }}</a></p>
     </div>
     <div class="card-footer text-center">
-        <a class="btn btn-danger" onclick="history.back(-1)"><i class="fas fa-arrow-circle-left"></i> Go Back</a><br>
+        <a class="btn btn-danger" onclick="history.back(-1)"><i class="fas fa-arrow-circle-left"></i> Go Back</a>
+        {% if session.user == setup.user_name %}
+        <a class="btn btn-primary" href="{{ url_for('edit_workspace', username=setup.user_name) }}"><i class="far fa-edit"></i> Edit</a>
+        {% endif %}
     </div>
 </div>
 

@@ -122,7 +122,8 @@ def my_workspace(username):
         # grab the user from the DB based on username
         user = mongo.db.users.find_one({"username": session["user"]})
         if mongo.db.workspaces.find_one({"user_name": session["user"]}):
-            setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
+            setup = mongo.db.workspaces.find_one(
+                {"user_name": session["user"]})
             return render_template("my_workspace.html", user=user, setup=setup)
         return redirect(url_for("add_workspace"))
     return redirect(url_for("login"))
@@ -130,15 +131,16 @@ def my_workspace(username):
 
 @app.route("/user_workspace/<setup_id>", methods=["GET"])
 def user_workspace(setup_id):
+    user = mongo.db.users.find_one({"username": session["user"]})
     setup = mongo.db.workspaces.find_one({"_id": ObjectId(setup_id)})
-    return render_template("user_workspace.html", setup=setup)
+    return render_template("user_workspace.html", user=user, setup=setup)
 
 
 # ----------------- UPLOAD USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
     if mongo.db.workspaces.find_one({"user_name": session["user"]}):
-        flash("You can only load one workspace, you could delete this one to replace it?")
+        flash("You can only have one workspace, delete this one to replace it?")
         return redirect(url_for("my_workspace", username=session["user"]))
 
     else:
@@ -147,7 +149,8 @@ def add_workspace():
             if allowed_file(image.filename):
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                path_to_image = (os.path.join(app.config['IMAGE_PATH'], filename))
+                path_to_image = (os.path.join(
+                    app.config['IMAGE_PATH'], filename))
                 setup = {
                     "image": path_to_image,
                     "description": request.form.get("description"),

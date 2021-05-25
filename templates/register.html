@@ -25,13 +25,11 @@
                 <input type="password" class="form-control" id="password" name="password" minlength="5" maxlength="20"  pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                 <div id="passwordHelp" class="form-text">Password needs to be between 5-20 characters.</div>
             </div>
-            <!-- Submit button -->
-            <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Register <i class="fas fa-check"></i></button>
-            </div>
-            <!-- Register -->
-            <div class="mb-3">
-                <a href="{{ url_for('login') }}" class="btn btn-danger">Already registered?<i class="fas fa-user"></i></a>
+            <div class="col-md-12 text-center">           
+            <!-- Register button -->
+                <button class="btn btn-primary" type="submit"><i class="fas fa-user-plus"></i> Register</button>
+            <!-- login -->
+                <a href="{{ url_for('login') }}" class="btn btn-danger"><i class="fas fa-sign-in-alt"></i> Already registered?</a>
             </div>
         </form>
     </div>
