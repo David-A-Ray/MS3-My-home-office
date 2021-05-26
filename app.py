@@ -40,9 +40,6 @@ def is_logged_in() -> Optional[str]:
     return session.get("user")
 
 
-
-
-
 # ----------------- SIGNUP, LOG IN, LOG OUT FUNCTIONS -----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -102,17 +99,11 @@ def logout():
     # remove user from session cookies
     flash("You have been logged out")
     session.pop("user")
-    return redirect(url_for("welcome"))
+    return redirect(url_for("home"))
 
 
 # ----------------- DASHBOARD AND USER FUNCTIONALITY -----------------
 @app.route("/")
-@app.route("/welcome")
-def welcome():
-    setups = mongo.db.workspaces.find()
-    return render_template("welcome.html", setups=setups)
-
-
 @app.route("/home")
 def home():
     setups = mongo.db.workspaces.find()
@@ -134,51 +125,55 @@ def my_workspace(username):
 
 @app.route("/user_workspace/<setup_id>", methods=["GET"])
 def user_workspace(setup_id):
-    user = mongo.db.users.find_one({"username": session["user"]})
-    setup = mongo.db.workspaces.find_one({"_id": ObjectId(setup_id)})
-    return render_template("user_workspace.html", user=user, setup=setup)
+    if is_logged_in():
+        user = mongo.db.users.find_one({"username": session["user"]})
+        setup = mongo.db.workspaces.find_one({"_id": ObjectId(setup_id)})
+        return render_template("user_workspace.html", user=user, setup=setup)
+    return redirect(url_for("login"))
 
 
 # ----------------- UPLOAD USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/add_workspace", methods=["GET", "POST"])
 def add_workspace():
-    if mongo.db.workspaces.find_one({"user_name": session["user"]}):
-        flash("You can only have one workspace, delete this one to replace it?")
-        return redirect(url_for("my_workspace", username=session["user"]))
+    if is_logged_in():
+        if mongo.db.workspaces.find_one({"user_name": session["user"]}):
+            flash("You can only have one workspace, delete this one to replace it?")
+            return redirect(url_for("my_workspace", username=session["user"]))
 
-    else:
-        if request.method == 'POST':
-            image = request.files['image']
-            if allowed_file(image.filename):
-                filename = secure_filename(image.filename)
-                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                path_to_image = (os.path.join(
-                    app.config['IMAGE_PATH'], filename))
-                setup = {
-                    "image": path_to_image,
-                    "description": request.form.get("description"),
-                    "user_name": session["user"],
-                    "upload_date": date.today().strftime("%d/%m/%Y"),
-                    "category_1": request.form.get("category_1"),
-                    "product_1": request.form.get("product_1"),
-                    "url_1": request.form.get("url_1"),
-                    "category_2": request.form.get("category_2"),
-                    "product_2": request.form.get("product_2"),
-                    "url_2": request.form.get("url_2"),
-                    "category_3": request.form.get("category_3"),
-                    "product_3": request.form.get("product_3"),
-                    "url_3": request.form.get("url_3"),
-                }
+        else:
+            if request.method == 'POST':
+                image = request.files['image']
+                if allowed_file(image.filename):
+                    filename = secure_filename(image.filename)
+                    image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    path_to_image = (os.path.join(
+                        app.config['IMAGE_PATH'], filename))
+                    setup = {
+                        "image": path_to_image,
+                        "description": request.form.get("description"),
+                        "user_name": session["user"],
+                        "upload_date": date.today().strftime("%d/%m/%Y"),
+                        "category_1": request.form.get("category_1"),
+                        "product_1": request.form.get("product_1"),
+                        "url_1": request.form.get("url_1"),
+                        "category_2": request.form.get("category_2"),
+                        "product_2": request.form.get("product_2"),
+                        "url_2": request.form.get("url_2"),
+                        "category_3": request.form.get("category_3"),
+                        "product_3": request.form.get("product_3"),
+                        "url_3": request.form.get("url_3"),
+                    }
 
-                mongo.db.workspaces.insert_one(setup)
-                flash("Your home office was uploaded")
-                return redirect(url_for("home"))
-            
-            else:
-                flash("That file type is not allowed")
-                return redirect(url_for("add_workspace"))
+                    mongo.db.workspaces.insert_one(setup)
+                    flash("Your home office was uploaded")
+                    return redirect(url_for("home"))
+                
+                else:
+                    flash("That file type is not allowed")
+                    return redirect(url_for("add_workspace"))
 
-        return render_template("add_workspace.html")
+            return render_template("add_workspace.html")
+    return redirect(url_for("login"))
 
 
 # ----------------- EDIT USER WORKSPACE FUNCTIONALITY -----------------
@@ -269,8 +264,8 @@ def error_403(error):
     return render_template('error.html', title="403 Error"), 403
 
 
-@app.errorhandler(500)
-def error_500(error):
+@app.errorhandler(Exception)
+def error_generic_exception(error):
     return render_template('error.html', title="500 Error"), 500
 
 
