@@ -5,12 +5,11 @@
     <div class="card-body">
         <h3 class="card-title text-center">Edit your workspace</h3>
         <form method="POST" enctype="multipart/form-data"
-            action="{{ url_for('edit_workspace', username=setup.user_name) }}">
+            action="{{ url_for('edit_workspace_image', username=setup.user_name) }}">
             <!-- Image -->
             <div class="mb-3">
-                <label for="image" class="form-label">Image: <a class="btn btn-primary" href="{{ url_for('edit_workspace_image', username=setup.user_name) }}"><i class="far fa-edit"></i> Edit</a></label>
-                <input class="form-control" type="text" aria-label="image" id="image"
-                name="image" value="{{ setup.image }}" readonly="readonly">
+                <label for="file" class="form-label">Select image to upload</label>
+                <input class="form-control validate" type="file" id="image" name="image" required>
             </div>
             
             <!-- Description -->

@@ -40,6 +40,9 @@ def is_logged_in() -> Optional[str]:
     return session.get("user")
 
 
+
+
+
 # ----------------- SIGNUP, LOG IN, LOG OUT FUNCTIONS -----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -199,12 +202,52 @@ def edit_workspace(username):
         }
 
         mongo.db.workspaces.update({"user_name": session["user"]}, update)
-        flash("Your home office was updated")
+        flash("Your workspace has been updated")
         return redirect(url_for("home"))
 
     user = mongo.db.users.find_one({"username": session["user"]})
     setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
     return render_template("edit_workspace.html", user=user, setup=setup)
+
+
+# ----------------- EDIT USER WORKSPACE AND IMAGE FUNCTIONALITY -----------------
+@app.route("/edit_workspace_image/<username>", methods=["GET", "POST"])
+def edit_workspace_image(username):
+    
+    if request.method == 'POST':
+        image = request.files['image']
+        if allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            path_to_image = (os.path.join(
+                app.config['IMAGE_PATH'], filename))
+            newImageUpdate = {
+                "image": path_to_image,
+                "description": request.form.get("description"),
+                "user_name": session["user"],
+                "upload_date": date.today().strftime("%d/%m/%Y"),
+                "category_1": request.form.get("category_1"),
+                "product_1": request.form.get("product_1"),
+                "url_1": request.form.get("url_1"),
+                "category_2": request.form.get("category_2"),
+                "product_2": request.form.get("product_2"),
+                "url_2": request.form.get("url_2"),
+                "category_3": request.form.get("category_3"),
+                "product_3": request.form.get("product_3"),
+                "url_3": request.form.get("url_3"),
+            }
+
+            mongo.db.workspaces.update({"user_name": session["user"]}, newImageUpdate)
+            flash("Your workspace has been updated")
+            return redirect(url_for("home"))
+            
+        else:
+            flash("That file type is not allowed")
+            return redirect(url_for("edit_workspace_image"))
+
+    user = mongo.db.users.find_one({"username": session["user"]})
+    setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
+    return render_template("edit_workspace_image.html", user=user, setup=setup)
 
 
 # ----------------- DELETE WORKSPACE FUNCTIONALITY -----------------
