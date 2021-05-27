@@ -1,0 +1,60 @@
+{% extends "add_workspace.html" %}
+{% block form %}
+<!-- Description -->
+<div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3" minlength="20" maxlength="250"
+        required>{{ setup.description }}</textarea>
+</div>
+<!-- Product 1 -->
+<!-- Dropdown -->
+<label for="item_1" class="form-label">Item 1 (optional)</label>
+<input class="form-control" list="datalistOptions" id="category_1" name="category_1" value="{{ setup.category_1 }}">
+<datalist id="datalistOptions">
+    <option value="Chair">
+    <option value="Desk">
+    <option value="Keyboard">
+    <option value="Monitor">
+    <option value="Mount">
+    <option value="Mouse">
+    <option value="Other hardware">
+    <option value="PC/Laptop">
+</datalist>
+<!-- Product -->
+<input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_1"
+    name="product_1" value="{{ setup.product_1 }}">
+<!-- URL link -->
+<input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_1" name="url_1"
+    value="{{ setup.url_1 }}"><br>
+
+<!-- Product 2 -->
+<!-- Dropdown -->
+<label for="item_2" class="form-label">Item 2 (optional)</label>
+<input class="form-control" list="datalistOptions" id="category_2" name="category_2" value="{{ setup.category_2 }}">
+<!-- Product -->
+<input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_2"
+    name="product_2" value="{{ setup.product_2 }}">
+<!-- URL link -->
+<input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_2" name="url_2"
+    value="{{ setup.url_2 }}"><br>
+
+<!-- Product 3 -->
+<!-- Dropdown -->
+<label for="item_3" class="form-label">Item 3 (optional)</label>
+<input class="form-control" list="datalistOptions" id="category_3" name="category_3" value="{{ setup.category_3 }}">
+<!-- Product -->
+<input class="form-control" type="text" placeholder="Product" aria-label="Product/Brand Name" id="product_3"
+    name="product_3" value="{{ setup.product_3 }}">
+<!-- URL link -->
+<input class="form-control" type="text" placeholder="URL link" aria-label="URL link" id="url_3" name="url_3"
+    value="{{ setup.url_3 }}"><br>
+
+<div class="col-md-12 text-center">
+    <!-- Submit button -->
+    <button class="btn btn-primary" type="submit"><i class="far fa-edit"></i> Edit</button>
+    <!-- Register -->
+    <a href="{{ url_for('my_workspace', username=session['user']) }}" class="btn btn-danger"><i class="fas fa-ban"></i>
+        Cancel</a>
+</div>
+</form>
+{% endblock %}

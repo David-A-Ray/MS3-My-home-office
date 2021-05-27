@@ -79,8 +79,7 @@ def login():
                 existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
-                return redirect(url_for(
-                    "home", username=session["user"]))
+                return redirect(url_for("home"))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -113,12 +112,10 @@ def home():
 @app.route("/my_workspace/<username>", methods=["GET", "POST"])
 def my_workspace(username):
     if is_logged_in():
-        # grab the user from the DB based on username
-        user = mongo.db.users.find_one({"username": session["user"]})
         if mongo.db.workspaces.find_one({"user_name": session["user"]}):
             setup = mongo.db.workspaces.find_one(
                 {"user_name": session["user"]})
-            return render_template("my_workspace.html", user=user, setup=setup)
+            return render_template("my_workspace.html", setup=setup)
         return redirect(url_for("add_workspace"))
     return redirect(url_for("login"))
 
@@ -126,9 +123,8 @@ def my_workspace(username):
 @app.route("/user_workspace/<setup_id>", methods=["GET"])
 def user_workspace(setup_id):
     if is_logged_in():
-        user = mongo.db.users.find_one({"username": session["user"]})
         setup = mongo.db.workspaces.find_one({"_id": ObjectId(setup_id)})
-        return render_template("user_workspace.html", user=user, setup=setup)
+        return render_template("user_workspace.html", setup=setup)
     return redirect(url_for("login"))
 
 
@@ -176,7 +172,7 @@ def add_workspace():
     return redirect(url_for("login"))
 
 
-# ----------------- EDIT USER WORKSPACE FUNCTIONALITY -----------------
+# ----------------- EDIT WORKSPACE FUNCTION -----------------
 def update_workspace(request, image):
     update = {
         "image": image,
@@ -193,15 +189,18 @@ def update_workspace(request, image):
         "product_3": request.form.get("product_3"),
         "url_3": request.form.get("url_3"),
     }
+
     mongo.db.workspaces.update({"user_name": session["user"]}, update)
-    flash("Your workspace has been updated")
     return redirect(url_for("home"))
 
 
+# ----------------- EDIT USER WORKSPACE FUNCTIONALITY -----------------
 @app.route("/edit_workspace/<username>", methods=["GET", "POST"])
 def edit_workspace(username):
     if request.method == 'POST':
+        flash("Your workspace has been updated")
         return update_workspace(request, request.form.get("image"))
+
     user = mongo.db.users.find_one({"username": session["user"]})
     setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
     return render_template("edit_workspace.html", user=user, setup=setup)
@@ -216,10 +215,12 @@ def edit_workspace_image(username):
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             path_to_image = (os.path.join(
                 app.config['IMAGE_PATH'], filename))
+            flash("Your workspace has been updated")
             return update_workspace(request, path_to_image)
         else:
             flash("That file type is not allowed")
             return redirect(url_for("edit_workspace_image"))
+
     user = mongo.db.users.find_one({"username": session["user"]})
     setup = mongo.db.workspaces.find_one({"user_name": session["user"]})
     return render_template("edit_workspace_image.html", user=user, setup=setup)
