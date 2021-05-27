@@ -2,7 +2,7 @@
 
 My home office is a comparison/sharing site for visuals of users home office's/workspce to include links to products for purchase
 
-![Am I responsive](/workspace/MS3-My-home-office/docs/images/responsive.png)
+![Am I responsive](https://github.com/David-A-Ray/MS3-My-home-office/blob/master/docs/images/responsive.png)
 
 ## UX
 
