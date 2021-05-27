@@ -1,52 +1,143 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+#  MS3 "My home office"
 
-Welcome David-A-Ray,
+My home office is a comparison/sharing site for visuals of users home office's/workspce to include links to products for purchase
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+![Am I responsive](/workspace/MS3-My-home-office/docs/images/responsive.png)
 
-## Gitpod Reminders
+## UX
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+### User Stories
 
-`python3 -m http.server`
+As a user I would like to:
+* Be able to upload my workspace
+* Be able to view others worpspace and details of products
+* View the most liked work spaces
+* Edit and delete my own workspace
+* Be able to easily log in and out of the app
 
-A blue button should appear to click: _Make Public_,
+### Strategy
 
-Another blue button should appear to click: _Open Browser_.
+The goal is to build a simple to navigate site with a welcome Modal with options that then guides the user through the site and back to the start when choosing to exit.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+### Scope
 
-A blue button should appear to click: _Make Public_,
+For users there needs to be an explanation of what the aim of the site is, an easy to navigate menu and simple forms to add/edit or delete the work space.
 
-Another blue button should appear to click: _Open Browser_.
+### Structure
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+To keep navigation as self explanatory as possible the structure of the site should create a natural flow as follows.
+* Home page will display all users workspaces, with a nav bar to allow users to navigate/upload their own space.
+* Each users space will have an option to expand and view product details.
+* Log in log out features.
 
-To log into the Heroku toolbelt CLI you can use:
+### Surface
 
-`heroku login -i`
+Quite a clean simple look to allow ease of navigation.
 
-If you have Multi-Factor Authentication (MFA) enabled then use the API key that was generated for you at [Heroku](https://dashboard.heroku.com/account) as your password.
-This API key is unique and private to you so do not share it. If you accidently make it public then you can create a new one with _Regenerate API Key_.
+## Technologies
 
-## Updates Since The Instructional Video
+### Languages
+* [HTML5](https://en.wikipedia.org/wiki/HTML5) - provides content and structure of the site.
+* [CSS3](https://en.wikipedia.org/wiki/CSS) - adds styling.
+* [JAVASCRIPT](https://en.wikipedia.org/wiki/JavaScript) - built in bootstrap min js.
+* [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) - used for interaction on backend.
+* [jinja](https://jinja.palletsprojects.com/en/3.0.x/) - used for shortcuts.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+### Frameworks 
+* [Bootstrap V4.5.2](https://getbootstrap.com/docs/4.5/getting-started/introduction/) - provides the bulk of responsive layout.
+* [jquery](https://jquery.com/) - used on dropdown menu.
+* [GitHub](https://github.com/) - GitHub has been used to manage version control and push content to repo.
+* [GitPod](https://www.gitpod.io/) - used as the IDE for building the site.
+* [mongodb](https://www.mongodb.com/) - functional backend database.
+* [heroku](https://en.wikipedia.org/wiki/Heroku) - heroku runs the app.
+* [Google FONTS](https://fonts.google.com/) - imported for 2 font varieties.
+* [Balsamiq wireframes](https://balsamiq.com/wireframes/?gclid=CjwKCAiA17P9BRB2EiwAMvwNyJFLuwdZxoUMDd-KJV_EtTEdllWFxfMzYAxyyiN7yGBDdFV0IoCHQRoCe0EQAvD_BwE) - used for all wireframes.
+* [TinyPNG](https://tinypng.com/) - used to compress initial image files.
+* [CSS Autoprefixer](https://autoprefixer.github.io/) - CSS was checked for browser compatibility. 
+* [AmIResponsive](http://ami.responsivedesign.is/) - used for initial responsive display and testing.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+## Features
+* Log in register
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+* Upload workspace:
+    * options to load images and details
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+* Home Page:
+    * display all work spaces with option to view more detail and like
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+* My workspace:
+    * displays users image and details with options to edit and delete.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+* Log out
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+## Features left to implement
+* Like feature - I ran out of time, left the like button in place but didn't impliment the JS or backend.
+* Search feature for popular products - did split the product uploads into a seperate cluster but struggled to get the forms to work so endedup restructuring back to as is.
 
----
+## Testing
 
-Happy coding!
+### Pre-Deployment
+Throughout development the site was previewed locally and tested as elements were added. The layout waschecked for responsiveness using developer tools. 
+
+### Post-Deployment
+* Deployed site was shared with friends and family.
+    * Ran the CSS through Autoprefixer to fix issues.
+
+### Final checks on code
+* Code validation
+    * W3 HTML validator.
+    * W3 CSS validator.
+
+### User stories Testing
+* Have the option to signup to app.
+    * Complete
+* Ability to upload my workpsace
+    * Complete
+* Ability to edit my workspace
+    * Complete
+* Ability to delete my workspace.
+    * Complete
+* Ability to delete my workspace.
+    * Complete
+* Ability to delete my workspace.
+    * Complete
+* Option to view other workspaces and details.
+    * Complete
+
+All user stories have been fullfilled from original targets. 
+
+## Deployment
+### MongoDb
+
+- mongodb was used as the project database.
+
+- I followed the following steps to set it up.
+	- signed up to Mongodb and created a shared cluster
+	- selected default AWS cloud provider
+	- selected Ireland region
+	- selected m0 cluster tier
+	- chose name for cluster
+	- once cluster was created I clicked 'CONNECT' button
+	- Selected 'connect your application'
+	- selected Python / 3.6 or later as my driver
+	- copied the connection string for use in my application
+	- set password / cluster name / collection name as enviuronmental variables to connect to my DB within flask
+	- used Flask-MongoEngine to interact with my DB within the app
+
+### Git Clone
+* To clone my repository follow these steps:
+1. Go to my GitHub repository - https://github.com/David-A-Ray/MS2-Whats-your-poison-memory-game
+2. Click on the CODE drop down button.
+3. With the HTTPS option selected click on the clipboard icon.
+4. Open your IDE.
+5. Create a directory you want the clone to be named as.
+6. Type git clone in your terminal followed by pasting the link you've copied.
+7. Hit enter and your local clone will be created.
+
+### Code
+Some of the code for the site was taken or influenced by the following sources:
+* stackoverflow.com 
+
+### Acknowledgments
+I would like to thank my mentor Reuben Ferrante for advice and help with troubleshooting.
